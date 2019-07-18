@@ -1,7 +1,10 @@
 package com.rf.apis.handlers;
 
+import io.restassured.response.Response;
+
 import com.rf.apis.RestAPI;
 import com.rf.configurations.Config;
+import com.rf.util.RestUtil;
 
 /**
  * 
@@ -20,5 +23,9 @@ public class DefaultApiHandler implements ApiHandler{
 		this.setDefaultHeaders(restAPI);
 	}
 
+	public Response sendRequest(RestAPI restAPI){
+		this.preProcess(restAPI);
+		return RestUtil.sendRequest(restAPI);
+	} 
 
 }

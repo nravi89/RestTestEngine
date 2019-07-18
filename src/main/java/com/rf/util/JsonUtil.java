@@ -6,6 +6,7 @@ import java.io.InputStream;
 import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonUtil {
@@ -17,6 +18,8 @@ private static Logger logger = Logger.getLogger(JsonUtil.class);
 		try {
 			//File file = new File(jsonFilePath);
 			InputStream file = JsonUtil.class.getResourceAsStream(jsonFilePath);
+			
+			
 			Object obj = objectMapper.readValue(file,classType);
 		    //objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		   // objectMapper.setVisibilityChecker(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));

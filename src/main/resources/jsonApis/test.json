@@ -1,5 +1,4 @@
 [{
   "url":"https://www.google.com/",
-  "method":"GET",
-  "headers":{}
+  "method":"GET"
 }]

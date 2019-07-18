@@ -1,13 +1,8 @@
 package com.rf.apis;
 
-import io.restassured.http.Method;
 import io.restassured.response.Response;
-
 import java.util.HashMap;
-
 import lombok.Data;
-
-import com.rf.apis.handlers.ApiHandler;
 import com.rf.util.RestUtil;
 
 
@@ -27,13 +22,12 @@ public class RestAPI{
 	 private HashMap<String,Object> formParams;
 	 private String body;
 	 
-	 private ApiHandler apiHandler;
-	 
 	 /*{
 		 headers = new HashMap<>();
 		// setDefaultHeaders();
 	 }*/
 	
+	 public RestAPI() {}
 	 
 	 public RestAPI(String url) {
 			this.url = url;
@@ -71,11 +65,6 @@ public class RestAPI{
 		Response resp = RestUtil.sendRequest(this);
 		return resp;
 	} */
-	
-	public Response sendRequest(){
-		apiHandler.preProcess(this);
-		return RestUtil.sendRequest(this);
-	} 
 	
 	
 	public final RestAPI header(String key, Object value) {
@@ -126,6 +115,10 @@ public class RestAPI{
 	public RestAPI body(String body) {
 		this.body = body;
 		return this;
+	}
+	
+	public Response sendRequest(){
+		return RestUtil.sendRequest(this);
 	}
 
 }
