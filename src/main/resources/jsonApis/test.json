@@ -1,4 +1,16 @@
-[{
-  "url":"https://www.google.com/",
-  "method":"GET"
-}]
+{
+   "seq":["google","yahoo"],
+   "properties":{
+      "G":"GET"
+    },
+	"apis":{
+		"google":{
+		  "url":"https://www.google.com/",
+		  "method":"GET"
+		 },
+		 "yahoo":{
+		  "url":"https://www.yahoo.com/",
+		  "method":"GET"
+		 }
+	}
+}	

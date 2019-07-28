@@ -16,56 +16,16 @@ public class RestAPI{
 	 private String url;
 	 private String method;
 	 private HashMap<String,String> pathParams;
-	 
 	 private HashMap<String,Object> headers;
 	 private HashMap<String,Object> queryParams;
 	 private HashMap<String,Object> formParams;
 	 private String body;
-	 
-	 /*{
-		 headers = new HashMap<>();
-		// setDefaultHeaders();
-	 }*/
 	
 	 public RestAPI() {}
 	 
 	 public RestAPI(String url) {
 			this.url = url;
 	}
-
-
-	
-	/*public Response GET() {
-		buildUrl();
-		method = Method.GET.;
-		Response resp = RestUtil.sendRequest(this);
-		return resp;
-	}
-
-	
-	public Response POST() {
-		buildUrl();
-		method = Method.POST;
-		Response resp = RestUtil.sendRequest(this);
-		return resp;
-	}
-
-	
-	public Response PUT() {
-		buildUrl();
-		method = Method.PUT;
-		Response resp = RestUtil.sendRequest(this);
-		return resp;
-	}
-
-	
-	public Response DELETE() {
-		buildUrl();
-		method = Method.DELETE;
-		Response resp = RestUtil.sendRequest(this);
-		return resp;
-	} */
-	
 	
 	public final RestAPI header(String key, Object value) {
 		headers.put(key, value);

@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com</groupId>
-  <artifactId>RestFramework</artifactId>
+  <artifactId>RestTestEngine</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>RestFramework</name>
+  <name>RestTestEngine</name>
   <url></url>
 
   <properties>
