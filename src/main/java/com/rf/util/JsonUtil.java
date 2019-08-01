@@ -13,14 +13,14 @@ public class JsonUtil {
 	
 private static Logger logger = Logger.getLogger(JsonUtil.class);
 	
-	public static Object getMappedObject(String  jsonFilePath,Class classType){
+	public static <T> T getMappedObject(String  jsonFilePath,Class<T> classType){
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			//File file = new File(jsonFilePath);
 			InputStream file = JsonUtil.class.getResourceAsStream(jsonFilePath);
 			
 			
-			Object obj = objectMapper.readValue(file,classType);
+			T obj = objectMapper.readValue(file,classType);
 		    //objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		   // objectMapper.setVisibilityChecker(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
 		    return obj;

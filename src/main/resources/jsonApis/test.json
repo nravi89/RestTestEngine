@@ -3,14 +3,27 @@
    "properties":{
       "G":"GET"
     },
+    
+    "di":{
+       "google":[
+             {
+              "paramName":"name",
+              "jsonPath":"name"
+             }
+        ]
+    },
+    
 	"apis":{
 		"google":{
-		  "url":"https://www.google.com/",
+		  "url":"http://localhost:8181/SpringExamples/get",
 		  "method":"GET"
 		 },
 		 "yahoo":{
-		  "url":"https://www.yahoo.com/",
-		  "method":"GET"
+		  "url":"http://localhost:8181/SpringExamples/get",
+		  "method":"GET",
+		  "queryParams":{
+		        "name":"{{name}}"
+		   }
 		 }
 	}
 }	
