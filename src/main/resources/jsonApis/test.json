@@ -1,5 +1,6 @@
 {
    "seq":["google","yahoo"],
+   "baseUri":"http://localhost:8181",
    "properties":{
       "G":"GET"
     },
@@ -15,11 +16,11 @@
     
 	"apis":{
 		"google":{
-		  "url":"http://localhost:8181/SpringExamples/get",
+		  "basePath":"SpringExamples/get",
 		  "method":"GET"
 		 },
 		 "yahoo":{
-		  "url":"http://localhost:8181/SpringExamples/get",
+		  "basePath":"SpringExamples/get",
 		  "method":"GET",
 		  "queryParams":{
 		        "name":"{{name}}"

@@ -26,9 +26,14 @@ public class RestUtil {
 	
 	private static Logger logger = Logger.getLogger(RestUtil.class);
 	
-	public static Response sendRequest(RestAPI restAPI){
-		logger.info("sendRequest called for url:"+restAPI.getUrl());
-		Response response = getRequestSpecification(restAPI).request(restAPI.getMethod(), restAPI.getUrl().trim());
+	public static Response sendRequest(String baseUri, RestAPI restAPI){
+		
+		if(restAPI.getBaseUri()!=null)
+			baseUri = restAPI.getBaseUri();
+		
+		Response response = getRequestSpecification(restAPI).baseUri(baseUri)
+				                                            .basePath(restAPI.getBasePath())
+				                                            .request(restAPI.getMethod());
 		response.then().log().all();
 		return response;
 	}
@@ -43,19 +48,25 @@ public class RestUtil {
 		HashMap<String,?> headers = restAPI.getHeaders();
 		HashMap<String,?> queryParams = restAPI.getQueryParams();
 		HashMap<String,?> formParams = restAPI.getFormParams();
+		HashMap<String,?> pathParams = restAPI.getPathParams();
 		String body = restAPI.getBody();
 		
+		if(pathParams!=null)
+		requestSpecification.pathParams(pathParams);	
+			
     	if(headers!=null)
     	requestSpecification.headers(headers);
     	
     	if (queryParams != null)
-		requestSpecification.queryParams(queryParams).log().all();
+		requestSpecification.queryParams(queryParams);
     	
 		if (formParams != null)
-		requestSpecification.formParams(formParams).log().all();
+		requestSpecification.formParams(formParams);
 
 		if (body != null)
-		requestSpecification.body(body).log().all();
+		requestSpecification.body(body);
+		
+		requestSpecification.log().all();
     	
     	return requestSpecification.relaxedHTTPSValidation();
 

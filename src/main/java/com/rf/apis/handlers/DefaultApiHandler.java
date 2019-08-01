@@ -25,7 +25,7 @@ public class DefaultApiHandler implements ApiHandler{
 
 	public Response sendRequest(RestAPI restAPI){
 		this.preProcess(restAPI);
-		return RestUtil.sendRequest(restAPI);
+		return restAPI.sendRequest();
 	} 
 
 }

@@ -12,11 +12,11 @@ import com.rf.apis.Dconfig;
 import com.rf.apis.RestAPI;
 import com.rf.apis.RestApiFlow;
 import com.rf.util.JsonUtil;
+import com.rf.util.RestUtil;
 
 public class RestEngine {
 	
 	private static Logger logger = Logger.getLogger(RestEngine.class);
-	//private Map<String, Object> diChache = new HashMap<String, Object>();
     private RestApiFlow apiFlow;
     private JtwigModel diChache = JtwigModel.newModel();
 	
@@ -28,13 +28,15 @@ public class RestEngine {
 		this.processAPIFlow();
 	}
 	
-	public void processAPI(){
+	private void processAPI(){
 		RestAPI[] apis = readJsonRequestFile();
 		for(RestAPI api:apis)
 			api.sendRequest();
 	}
 	
 	private void processAPIFlow(){
+		if(logger.isInfoEnabled())
+			logger.info("start process api flow for ::"+this.apiFlow);
 		
 		if(this.apiFlow == null){
 			logger.error("API flow null - return");
@@ -46,7 +48,7 @@ public class RestEngine {
 			
 			RestAPI api = processRequest(apis.get(apiId));
 			
-			Response resp = api.sendRequest();
+			Response resp = RestUtil.sendRequest(apiFlow.getBaseUri(),api);
 			
 			if(apiFlow.getDi()!=null)
 			processResponse(apiId, resp);
@@ -62,32 +64,53 @@ public class RestEngine {
 			return null;
 		
 
-		if(api.getQueryParams()!=null){
-			injectValues(api.getQueryParams());
-		}
+		injectValues(api.getQueryParams());		
+		injectValues(api.getFormParams());
+		injectValues(api.getPathParams());
+		api.setBody(injectValues(api.getBody()));
 		
-		System.out.println("map2::"+api.getQueryParams());
 		return api;
 	}
 	
+
 	private  void processResponse(String apiId, Response resp) {
 		   Dconfig[] dconfigs = apiFlow.getDi().get(apiId);
 	       if(dconfigs == null)
 	    	   return;
-	       
-	       //get data from resp body
-	       for(Dconfig dc:dconfigs){
-	    	   if(dc.getJsonPath()!=null){
-		    	   diChache.with(dc.getParamName(), resp.getBody().jsonPath().get(dc.getJsonPath()));
-		       }else if(dc.getHeader()!=null){
-		    	   
-		       }
-	       }
+	       Object dvalue = null;
 	      
+	       for(Dconfig dc:dconfigs){
+	    	   if(dc.getJsonPath()!=null){  //get data from resp body
+	    		   dvalue = resp.getBody().jsonPath().get(dc.getJsonPath());
+		    	   diChache.with(dc.getParamName(), dvalue);
+		       }else if(dc.getHeader()!=null){  //get data from header
+		    	   dvalue = resp.getHeader(dc.getHeader());
+		    	   diChache.with(dc.getParamName(), dvalue);
+		       }
+	    	   
+	    	   if(dvalue == null)
+    			   logger.error("DI Failed - value:NULL for param name:"+dc.getParamName());
+	       }
+	}
+	
+	
+    private String injectValues(String body) {
+    	
+    	if(body==null)
+    		return null;
+    	
+    	JtwigTemplate template = JtwigTemplate.inlineTemplate(body);
+        body = template.render(diChache);
+        
+        return body;
 	}
 	
 	
 	private void injectValues(HashMap<String, Object> raw){
+		
+		if(raw==null)
+			return;
+		
 		raw.forEach((key,value)->{
 			if(value instanceof String){
 				String v = (String)value;
@@ -97,8 +120,6 @@ public class RestEngine {
 			        raw.put(key, v);
 				}
 			}
-				
-			
 		});
 	}
 	

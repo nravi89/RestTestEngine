@@ -10,6 +10,7 @@ import lombok.Setter;
 public class RestApiFlow {
 	
 	private String[] seq;
+	private String baseUri;
 	private HashMap<String, String> properties;
 	private HashMap<String, Dconfig[]> di;
 	private HashMap<String, RestAPI> apis;

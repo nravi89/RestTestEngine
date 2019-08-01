@@ -7,15 +7,16 @@ import com.rf.util.RestUtil;
 
 
 /**
- * @author rnarayan
+ * @author ravinarayan
  * Default RestAPI implementation for rest framework 
  */
 @Data
 public class RestAPI{
 
-	 private String url;
+	 private String baseUri;
+	 private String basePath;
 	 private String method;
-	 private HashMap<String,String> pathParams;
+	 private HashMap<String,Object> pathParams;
 	 private HashMap<String,Object> headers;
 	 private HashMap<String,Object> queryParams;
 	 private HashMap<String,Object> formParams;
@@ -23,8 +24,8 @@ public class RestAPI{
 	
 	 public RestAPI() {}
 	 
-	 public RestAPI(String url) {
-			this.url = url;
+	 public RestAPI(String baseUri) {
+			this.baseUri = baseUri;
 	}
 	
 	public final RestAPI header(String key, Object value) {
@@ -42,7 +43,7 @@ public class RestAPI{
 		return this;
 	}
 	
-	private void buildUrl(){		
+/*	private void buildUrl(){		
 			if(pathParams==null)
 				return;
 			
@@ -50,7 +51,7 @@ public class RestAPI{
 				url = url.replace(k, v);
 			});
 	}
-	
+	*/
 	
 	public RestAPI queryParam(String key, Object value) {
 		if(queryParams == null)
@@ -77,8 +78,8 @@ public class RestAPI{
 		return this;
 	}
 	
-	public Response sendRequest(){
-		return RestUtil.sendRequest(this);
+	public Response sendRequest(){	
+		return RestUtil.sendRequest(null,this);
 	}
 
 }
