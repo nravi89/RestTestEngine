@@ -8,19 +8,14 @@ import com.rf.util.RestUtil;
 
 /**
  * 
- * @author rnarayan
+ * @author ravinarayan
  *
  */
 public class DefaultApiHandler implements ApiHandler{
-
-	@Override
-	public void setDefaultHeaders(RestAPI restAPI) {
-	  
-	}
 	
 	@Override
 	public void preProcess(RestAPI restAPI) {
-		this.setDefaultHeaders(restAPI);
+		System.out.println("DefaultApiHandler preprocess called");
 	}
 
 	public Response sendRequest(RestAPI restAPI){
