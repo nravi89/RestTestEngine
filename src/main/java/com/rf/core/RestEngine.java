@@ -11,6 +11,7 @@ import org.jtwig.JtwigTemplate;
 import com.rf.apis.Dconfig;
 import com.rf.apis.RestAPI;
 import com.rf.apis.RestApiFlow;
+import com.rf.apis.handlers.ApiHandler;
 import com.rf.util.JsonUtil;
 import com.rf.util.RestUtil;
 
@@ -19,9 +20,17 @@ public class RestEngine {
 	private static Logger logger = Logger.getLogger(RestEngine.class);
     private RestApiFlow apiFlow;
     private JtwigModel diChache = JtwigModel.newModel();
+    private ApiHandler apiHandler;
 	
 	public RestEngine(String apiFlowPath) {
-         this.apiFlow = readRestApiFlowFile(apiFlowPath);
+        this.apiFlow = readRestApiFlowFile(apiFlowPath);
+         
+        try {
+			this.apiHandler = ApiHandler.initApiHAndler(apiFlow.getApiHandler());
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			logger.error("issue in initializing api handler",e);
+		}
+ 		
 	}
 	
 	public void start(){
@@ -48,7 +57,13 @@ public class RestEngine {
 			
 			RestAPI api = processRequest(apis.get(apiId));
 			
+			if(apiHandler!=null)
+				apiHandler.processRequest(api);
+			
 			Response resp = RestUtil.sendRequest(apiFlow.getBaseUri(),api);
+			
+			if(apiHandler!=null)
+				apiHandler.processResponse(api, resp);
 			
 			if(apiFlow.getDi()!=null)
 			processResponse(apiId, resp);

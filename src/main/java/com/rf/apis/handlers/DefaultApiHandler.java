@@ -1,10 +1,10 @@
 package com.rf.apis.handlers;
 
-import io.restassured.response.Response;
 
 import com.rf.apis.RestAPI;
-import com.rf.configurations.Config;
-import com.rf.util.RestUtil;
+
+import io.restassured.response.Response;
+
 
 /**
  * 
@@ -14,13 +14,14 @@ import com.rf.util.RestUtil;
 public class DefaultApiHandler implements ApiHandler{
 	
 	@Override
-	public void preProcess(RestAPI restAPI) {
+	public void processRequest(RestAPI restAPI) {
 		System.out.println("DefaultApiHandler preprocess called");
 	}
 
-	public Response sendRequest(RestAPI restAPI){
-		this.preProcess(restAPI);
-		return restAPI.sendRequest();
-	} 
+	@Override
+	public void processResponse(RestAPI restAPI, Response resp) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

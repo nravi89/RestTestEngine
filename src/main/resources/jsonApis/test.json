@@ -1,6 +1,7 @@
 {
    "seq":["google","yahoo"],
    "baseUri":"http://localhost:8181",
+   "apiHandler":"com.rf.apis.handlers.DefaultApiHandler",
    "properties":{
       "G":"GET"
     },
