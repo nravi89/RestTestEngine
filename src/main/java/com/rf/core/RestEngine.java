@@ -19,7 +19,7 @@ public class RestEngine {
 	
 	private static Logger logger = Logger.getLogger(RestEngine.class);
     private RestApiFlow apiFlow;
-    private JtwigModel diChache = JtwigModel.newModel();
+    private JtwigModel diCache = JtwigModel.newModel();
     private ApiHandler apiHandler;
 	
 	public RestEngine(String apiFlowPath) {
@@ -97,10 +97,10 @@ public class RestEngine {
 	       for(Dconfig dc:dconfigs){
 	    	   if(dc.getJsonPath()!=null){  //get data from resp body
 	    		   dvalue = resp.getBody().jsonPath().get(dc.getJsonPath());
-		    	   diChache.with(dc.getParamName(), dvalue);
+		    	   diCache.with(dc.getParamName(), dvalue);
 		       }else if(dc.getHeader()!=null){  //get data from header
 		    	   dvalue = resp.getHeader(dc.getHeader());
-		    	   diChache.with(dc.getParamName(), dvalue);
+		    	   diCache.with(dc.getParamName(), dvalue);
 		       }
 	    	   
 	    	   if(dvalue == null)
@@ -115,7 +115,7 @@ public class RestEngine {
     		return null;
     	
     	JtwigTemplate template = JtwigTemplate.inlineTemplate(body);
-        body = template.render(diChache);
+        body = template.render(diCache);
         
         return body;
 	}
@@ -131,7 +131,7 @@ public class RestEngine {
 				String v = (String)value;
 				if(v.indexOf("{{")>-1){
 					JtwigTemplate template = JtwigTemplate.inlineTemplate(v);
-			        v = template.render(diChache);
+			        v = template.render(diCache);
 			        raw.put(key, v);
 				}
 			}
@@ -160,7 +160,7 @@ public class RestEngine {
 	    RestEngine engine = new RestEngine("/jsonApis/test.json");
 		engine.start();
 		
-		System.out.println(engine.diChache);
+		System.out.println(engine.diCache);
 		
 		/*HashMap<String, Object> respChache = new HashMap<String, Object>();
 		respChache.put("name", "Ravi Narayan");

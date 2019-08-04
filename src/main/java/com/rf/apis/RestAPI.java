@@ -21,6 +21,7 @@ public class RestAPI{
 	 private HashMap<String,Object> queryParams;
 	 private HashMap<String,Object> formParams;
 	 private String body;
+	 private Assertion assertion;
 	
 	 public RestAPI() {}
 	 

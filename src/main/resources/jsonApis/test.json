@@ -16,11 +16,31 @@
     },
     
 	"apis":{
+		
 		"google":{
 		  "basePath":"SpringExamples/get",
-		  "method":"GET"
+		  "method":"GET",
+		  "assertion":{
+			  "status":"",
+			  "checks":[],
+			  "json":{
+				    "name": "ravi Narayan",
+				    "age": 30,
+				    "arr":[3,5,4]
+				},
+			  "jsonFile":"",
+			  "jsonPathFile":"",
+			  "jsonPaths":[
+				  {
+					  "key":"",
+					  "value":"",
+					  "opp":""
+				  }
+			  ]
+		  }
 		 },
-		 "yahoo":{
+		 
+		"yahoo":{
 		  "basePath":"SpringExamples/get",
 		  "method":"GET",
 		  "queryParams":{
