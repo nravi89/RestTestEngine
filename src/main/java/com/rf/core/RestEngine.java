@@ -5,8 +5,6 @@ import io.restassured.response.Response;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
-import org.jtwig.JtwigModel;
-import org.jtwig.JtwigTemplate;
 
 import com.rf.apis.Dconfig;
 import com.rf.apis.RestAPI;
@@ -20,7 +18,7 @@ public class RestEngine {
 	
 	private static Logger logger = Logger.getLogger(RestEngine.class);
     private RestApiFlow apiFlow;
-    private DataContext context;
+    private DataContext context = DataContext.getInstance();
     private ApiHandler apiHandler = new DefaultApiHandler();
 	
 	public RestEngine(String apiFlowPath) {

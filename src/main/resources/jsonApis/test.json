@@ -21,22 +21,30 @@
 		  "basePath":"SpringExamples/get",
 		  "method":"GET",
 		  "assertion":{
-			  "status":"",
+			  "status":"200",
 			  "checks":[],
 			  "json":{
 				    "name": "ravi Narayan",
 				    "age": 30,
 				    "arr":[3,5,4]
 				},
-			  "jsonFile":"",
-			  "jsonPathFile":"",
+			  "jsonFile":"stu.json",
 			  "jsonPaths":[
 				  {
-					  "key":"",
-					  "value":"",
-					  "opp":""
+					  "key":"arr",
+					  "value":"[3,5,4]",
+					  "opp":"",
+					  "valueType":"JSON"
+				  },
+				  
+				  {
+					  "key":"name",
+					  "value":"ravi Narayan",
+					  "opp":"",
+					  "valueType":"PRIMITIVE"
 				  }
-			  ]
+			  ],
+			  "jsonPathFile":""
 		  }
 		 },
 		 

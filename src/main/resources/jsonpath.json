@@ -1,0 +1,14 @@
+[
+  {
+	  "key":"arr",
+	  "value":"[3,5,4]",
+	  "opp":"",
+	  "valueType":"JSON"
+  },
+  {
+	  "key":"name",
+	  "value":"ravi Narayan",
+	  "opp":"",
+	  "valueType":"PRIM"
+  }
+ ]
