@@ -1,6 +1,7 @@
 package com.rf.apis.handlers;
 
 import com.rf.apis.RestAPI;
+import com.rf.core.DataContext;
 
 import io.restassured.response.Response;
 
@@ -10,8 +11,8 @@ import io.restassured.response.Response;
  *
  */
 public interface ApiHandler {
-	public void processRequest(RestAPI restAPI);
-	public void processResponse(RestAPI restAPI, Response resp);
+	public void processRequest(RestAPI restAPI, DataContext context);
+	public void processResponse(RestAPI restAPI, Response resp, DataContext context);
 	
 	public static ApiHandler initApiHAndler(String classPath) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		if(classPath==null)

@@ -12,6 +12,7 @@ import com.rf.apis.Dconfig;
 import com.rf.apis.RestAPI;
 import com.rf.apis.RestApiFlow;
 import com.rf.apis.handlers.ApiHandler;
+import com.rf.apis.handlers.DefaultApiHandler;
 import com.rf.util.JsonUtil;
 import com.rf.util.RestUtil;
 
@@ -19,18 +20,26 @@ public class RestEngine {
 	
 	private static Logger logger = Logger.getLogger(RestEngine.class);
     private RestApiFlow apiFlow;
-    private JtwigModel diCache = JtwigModel.newModel();
-    private ApiHandler apiHandler;
+    private DataContext context;
+    private ApiHandler apiHandler = new DefaultApiHandler();
 	
 	public RestEngine(String apiFlowPath) {
         this.apiFlow = readRestApiFlowFile(apiFlowPath);
-         
-        try {
-			this.apiHandler = ApiHandler.initApiHAndler(apiFlow.getApiHandler());
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-			logger.error("issue in initializing api handler",e);
-		}
- 		
+        
+        if(apiFlow.getApiHandler()!=null){
+        	try {
+    			this.apiHandler = ApiHandler.initApiHAndler(apiFlow.getApiHandler());
+    		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+    			logger.error("issue in initializing api handler",e);
+    		}
+        }
+        
+	}
+	
+	public RestEngine(String apiFlowPath, ApiHandler apiHandler) {
+        this.apiFlow = readRestApiFlowFile(apiFlowPath);
+        if(apiHandler!=null)
+        	this.apiHandler = apiHandler;
 	}
 	
 	public void start(){
@@ -56,14 +65,10 @@ public class RestEngine {
 		for(String apiId:apiFlow.getSeq()){
 			
 			RestAPI api = processRequest(apis.get(apiId));
-			
-			if(apiHandler!=null)
-				apiHandler.processRequest(api);
-			
-			Response resp = RestUtil.sendRequest(apiFlow.getBaseUri(),api);
-			
-			if(apiHandler!=null)
-				apiHandler.processResponse(api, resp);
+
+			apiHandler.processRequest(api, context);
+			Response resp = RestUtil.sendRequest(apiFlow.getBaseUri(),api);			
+			apiHandler.processResponse(api, resp, context);
 			
 			if(apiFlow.getDi()!=null)
 			processResponse(apiId, resp);
@@ -97,10 +102,10 @@ public class RestEngine {
 	       for(Dconfig dc:dconfigs){
 	    	   if(dc.getJsonPath()!=null){  //get data from resp body
 	    		   dvalue = resp.getBody().jsonPath().get(dc.getJsonPath());
-		    	   diCache.with(dc.getParamName(), dvalue);
+		    	   context.addCache(dc.getParamName(), dvalue);
 		       }else if(dc.getHeader()!=null){  //get data from header
 		    	   dvalue = resp.getHeader(dc.getHeader());
-		    	   diCache.with(dc.getParamName(), dvalue);
+		    	   context.addCache(dc.getParamName(), dvalue);
 		       }
 	    	   
 	    	   if(dvalue == null)
@@ -114,8 +119,7 @@ public class RestEngine {
     	if(body==null)
     		return null;
     	
-    	JtwigTemplate template = JtwigTemplate.inlineTemplate(body);
-        body = template.render(diCache);
+        body = context.render(body);
         
         return body;
 	}
@@ -130,8 +134,7 @@ public class RestEngine {
 			if(value instanceof String){
 				String v = (String)value;
 				if(v.indexOf("{{")>-1){
-					JtwigTemplate template = JtwigTemplate.inlineTemplate(v);
-			        v = template.render(diCache);
+					v = context.render(v);
 			        raw.put(key, v);
 				}
 			}
@@ -160,7 +163,7 @@ public class RestEngine {
 	    RestEngine engine = new RestEngine("/jsonApis/test.json");
 		engine.start();
 		
-		System.out.println(engine.diCache);
+		//System.out.println(engine.diCache);
 		
 		/*HashMap<String, Object> respChache = new HashMap<String, Object>();
 		respChache.put("name", "Ravi Narayan");
