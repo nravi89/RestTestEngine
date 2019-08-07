@@ -11,12 +11,11 @@ import com.rf.apis.RestAPI;
 import com.rf.core.DataContext;
 import com.rf.util.JsonUtil;
 
-import io.restassured.internal.path.json.JSONAssertion;
+
 import io.restassured.response.Response;
 import net.javacrumbs.jsonunit.JsonAssert;
 import net.javacrumbs.jsonunit.core.Configuration;
 import net.javacrumbs.jsonunit.core.Option;
-import net.javacrumbs.jsonunit.core.internal.Options;
 import net.javacrumbs.jsonunit.core.util.ResourceUtils;
 
 
@@ -68,11 +67,15 @@ public class DefaultApiHandler implements ApiHandler{
 		//json path assertion
 		if(assertion.getJsonPaths()!=null){
 			assertJsonPath(assertion.getJsonPaths(),resp,config);
+			if(logger.isInfoEnabled())
+				logger.info("=======json path assertion done======");
 		}
 		
 		//json path file assertion
 		if(assertion.getJsonPathFile()!=null){
-			
+			assertJsonPathFile(assertion.getJsonPathFile(), resp, config);
+			if(logger.isInfoEnabled())
+				logger.info("=======json path file assertion done======");
 		}
 		
 		
@@ -97,8 +100,7 @@ public class DefaultApiHandler implements ApiHandler{
 			if(jsonPath.getValueType().equals(JsonPath.VALUE_TYPE_JSON))
 			   JsonAssert.assertJsonEquals(jsonPath.getValue(), actual, config);
 		}
-		if(logger.isInfoEnabled())
-			logger.info("=======json path assertion done======");
+		
 	}
 	
 	private void assertJsonPathFile(String jsonPathFile, Response resp, Configuration config){

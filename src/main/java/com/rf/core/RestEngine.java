@@ -11,6 +11,8 @@ import com.rf.apis.RestAPI;
 import com.rf.apis.RestApiFlow;
 import com.rf.apis.handlers.ApiHandler;
 import com.rf.apis.handlers.DefaultApiHandler;
+import com.rf.apis.handlers.DefaultFlowHandler;
+import com.rf.apis.handlers.FlowHandler;
 import com.rf.util.JsonUtil;
 import com.rf.util.RestUtil;
 
@@ -20,8 +22,9 @@ public class RestEngine {
     private RestApiFlow apiFlow;
     private DataContext context = DataContext.getInstance();
     private ApiHandler apiHandler = new DefaultApiHandler();
+    private FlowHandler flowHandler;
 	
-	public RestEngine(String apiFlowPath) {
+	private RestEngine(String apiFlowPath) {
         this.apiFlow = readRestApiFlowFile(apiFlowPath);
         
         if(apiFlow.getApiHandler()!=null){
@@ -34,14 +37,47 @@ public class RestEngine {
         
 	}
 	
-	public RestEngine(String apiFlowPath, ApiHandler apiHandler) {
+	/*public RestEngine(String apiFlowPath, ApiHandler apiHandler) {
         this.apiFlow = readRestApiFlowFile(apiFlowPath);
         if(apiHandler!=null)
         	this.apiHandler = apiHandler;
-	}
+	}*/
+	
+	
 	
 	public void start(){
+		if(flowHandler!=null)
+			flowHandler.preEvent(apiFlow);
+		
 		this.processAPIFlow();
+		
+		if(flowHandler!=null)
+			flowHandler.postEvent(apiFlow);
+	}
+	
+	public static void start(String apiFlowPath){
+		RestEngine engine = new RestEngine(apiFlowPath);
+		engine.start();
+	}
+
+	
+	public static void start(String apiFlowPath, ApiHandler apiHandler){
+		RestEngine engine = new RestEngine(apiFlowPath);
+		engine.apiHandler = apiHandler;
+		engine.start();
+	}
+	
+	public static void start(String apiFlowPath, FlowHandler flowHandler){
+		RestEngine engine = new RestEngine(apiFlowPath);
+		engine.flowHandler = flowHandler;
+		engine.start();
+	}
+	
+	public static void start(String apiFlowPath, FlowHandler flowHandler, ApiHandler apiHandler){
+		RestEngine engine = new RestEngine(apiFlowPath);
+		engine.flowHandler = flowHandler;
+		engine.apiHandler = apiHandler;
+		engine.start();
 	}
 	
 	private void processAPI(){
@@ -158,8 +194,7 @@ public class RestEngine {
 	
 	public static void main(String[] args) {
 		//System.out.println(readJsonRequestFile()[0]);
-	    RestEngine engine = new RestEngine("/jsonApis/test.json");
-		engine.start();
+	    RestEngine.start("jsonApis/test.json", new DefaultFlowHandler());
 		
 		//System.out.println(engine.diCache);
 		

@@ -28,7 +28,7 @@
 				    "age": 30,
 				    "arr":[3,5,4]
 				},
-			  "jsonFile":"stu.json",
+			  "jsonFile":"assert/stu.json",
 			  "jsonPaths":[
 				  {
 					  "key":"arr",
@@ -44,7 +44,7 @@
 					  "valueType":"PRIMITIVE"
 				  }
 			  ],
-			  "jsonPathFile":""
+			  "jsonPathFile":"assert/jsonpath.json"
 		  }
 		 },
 		 

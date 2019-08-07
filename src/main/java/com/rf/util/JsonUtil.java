@@ -2,12 +2,15 @@ package com.rf.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 
 import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import net.javacrumbs.jsonunit.core.util.ResourceUtils;
 
 public class JsonUtil {
 	
@@ -17,10 +20,10 @@ private static Logger logger = Logger.getLogger(JsonUtil.class);
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			//File file = new File(jsonFilePath);
-			InputStream file = JsonUtil.class.getResourceAsStream(jsonFilePath);
+			//InputStream file = JsonUtil.class.getResourceAsStream(jsonFilePath);
+			Reader reader = ResourceUtils.resource(jsonFilePath);
 			
-			
-			T obj = objectMapper.readValue(file,classType);
+			T obj = objectMapper.readValue(reader,classType);
 		    //objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		   // objectMapper.setVisibilityChecker(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
 		    return obj;
