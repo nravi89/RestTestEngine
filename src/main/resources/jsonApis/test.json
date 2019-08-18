@@ -1,59 +1,46 @@
 {
-   "seq":["google","yahoo"],
-   "baseUri":"http://localhost:8181",
+   "seq":["postStudent","getStudent","getAllStudent"],
+   "baseUri":"http://localhost:4567",
    "apiHandler":"com.rf.apis.handlers.DefaultApiHandler",
    "properties":{
       "G":"GET"
     },
     
     "di":{
-       "google":[
-             {
-              "paramName":"name",
-              "jsonPath":"name"
-             }
-        ]
+    	"postStudent":[
+    		{
+    			"paramName":"id",
+                "jsonPath":"id"
+    		}
+    	]
     },
     
 	"apis":{
 		
-		"google":{
-		  "basePath":"SpringExamples/get",
-		  "method":"GET",
+		"postStudent":{
+		  "basePath":"/student",
+		  "method":"POST",
+		  "body":{
+			   "name":"Ravi Narayan",
+			   "age": 30,
+			   "grade":"22th"
+		  },
 		  "assertion":{
-			  "status":"200",
-			  "checks":[],
-			  "json":{
-				    "name": "ravi Narayan",
-				    "age": 30,
-				    "arr":[3,5,4]
-				},
-			  "jsonFile":"assert/stu.json",
-			  "jsonPaths":[
-				  {
-					  "key":"arr",
-					  "value":"[3,5,4]",
-					  "opp":"",
-					  "valueType":"JSON"
-				  },
-				  
-				  {
-					  "key":"name",
-					  "value":"ravi Narayan",
-					  "opp":"",
-					  "valueType":"PRIMITIVE"
-				  }
-			  ],
-			  "jsonPathFile":"assert/jsonpath.json"
+			  "status":"200"
 		  }
+	     },
+		 
+		"getStudent":{
+		   "basePath":"/student",
+		   "method":"GET",
+		   "queryParams":{
+		        "id":"{{id}}"
+		   }
 		 },
 		 
-		"yahoo":{
-		  "basePath":"SpringExamples/get",
-		  "method":"GET",
-		  "queryParams":{
-		        "name":"{{name}}"
-		   }
+		 "getAllStudent":{
+			   "basePath":"/student",
+			   "method":"GET"
 		 }
 	}
 }	

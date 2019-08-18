@@ -2,7 +2,12 @@ package com.rf.apis;
 
 import io.restassured.response.Response;
 import java.util.HashMap;
+
+import org.json.simple.JSONObject;
+
 import lombok.Data;
+
+import com.rf.util.JsonUtil;
 import com.rf.util.RestUtil;
 
 
@@ -20,7 +25,7 @@ public class RestAPI{
 	 private HashMap<String,Object> headers;
 	 private HashMap<String,Object> queryParams;
 	 private HashMap<String,Object> formParams;
-	 private String body;
+	 private JSONObject body;
 	 private Assertion assertion;
 	
 	 public RestAPI() {}
@@ -75,7 +80,7 @@ public class RestAPI{
 	
 	
 	public RestAPI body(String body) {
-		this.body = body;
+		this.body = JsonUtil.getJsonObject(body);
 		return this;
 	}
 	

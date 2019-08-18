@@ -3,6 +3,7 @@ package com.rf.util;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
 
 import com.rf.apis.RestAPI;
 
@@ -49,7 +50,7 @@ public class RestUtil {
 		HashMap<String,?> queryParams = restAPI.getQueryParams();
 		HashMap<String,?> formParams = restAPI.getFormParams();
 		HashMap<String,?> pathParams = restAPI.getPathParams();
-		String body = restAPI.getBody();
+		JSONObject body = restAPI.getBody();
 		
 		if(pathParams!=null)
 		requestSpecification.pathParams(pathParams);	

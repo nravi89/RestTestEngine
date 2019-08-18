@@ -5,6 +5,7 @@ import io.restassured.response.Response;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
 
 import com.rf.apis.Dconfig;
 import com.rf.apis.RestAPI;
@@ -148,14 +149,19 @@ public class RestEngine {
 	}
 	
 	
-    private String injectValues(String body) {
+    private JSONObject injectValues(JSONObject obj) {
     	
-    	if(body==null)
+    	if(obj==null)
     		return null;
+    	
+    	String body = obj.toJSONString();
+    	
+    	if(body.indexOf("{{")==-1)
+    		return obj;
     	
         body = context.render(body);
         
-        return body;
+        return JsonUtil.getJsonObject(body);
 	}
 	
 	
