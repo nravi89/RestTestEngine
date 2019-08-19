@@ -19,7 +19,7 @@ RestTestEngine test flow of apis. We will provide a json file which have all the
     "di":{
     	"postStudent":[
     		{
-    			"paramName":"id",
+    		"paramName":"id",
                 "jsonPath":"id"
     		}
     	]
