@@ -9,31 +9,50 @@ RestTestEngine test flow of apis. We will provide a json file which have all the
 ```
 //Json file name: apiFlow.json
 {
-   "seq":["api1","api2"],
-   "baseUri":"http://localhost:8181",
-    "di":{
-       "api1":[
-             {
-              "paramName":"name",
-              "jsonPath":"name"
-             }
-        ]
+   "seq":["postStudent","getStudent","getAllStudent"],
+   "baseUri":"http://localhost:4567",
+   "apiHandler":"com.rf.apis.handlers.DefaultApiHandler",
+   "properties":{
+      "G":"GET"
     },
-	"apis":{
-		
-		"api1":{
-		  "basePath":"SpringExamples/get",
-		  "method":"GET"
-		 },
-		 
-		"api2":{
-		  "basePath":"SpringExamples/get",
-		  "method":"GET",
-		  "queryParams":{
-		        "name":"{{name}}"
-		   }
-		 }
-	}
+    
+    "di":{
+    	"postStudent":[
+    		{
+    			"paramName":"id",
+                "jsonPath":"id"
+    		}
+    	]
+    },
+    
+    "apis":{
+
+	"postStudent":{
+	  "basePath":"/student",
+	  "method":"POST",
+	  "body":{
+		   "name":"Ravi Narayan",
+		   "age": 30,
+		   "grade":"22th"
+	  },
+	  "assertion":{
+		  "status":"200"
+	  }
+        },
+
+	"getStudent":{
+	   "basePath":"/student",
+	   "method":"GET",
+	   "queryParams":{
+		"id":"{{id}}"
+	   }
+	 },
+
+         "getAllStudent":{
+	   "basePath":"/student",
+	   "method":"GET"
+	  }
+      }
 }	
 ```
 
