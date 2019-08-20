@@ -30,7 +30,7 @@ public class RestEngine {
         
         if(apiFlow.getApiHandler()!=null){
         	try {
-    			this.apiHandler = ApiHandler.initApiHAndler(apiFlow.getApiHandler());
+    			this.apiHandler = ApiHandler.initApiHandler(apiFlow.getApiHandler());
     		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
     			logger.error("issue in initializing api handler",e);
     		}
@@ -122,7 +122,7 @@ public class RestEngine {
 		injectValues(api.getQueryParams());		
 		injectValues(api.getFormParams());
 		injectValues(api.getPathParams());
-		api.setBody(injectValues(api.getBody()));
+		api.setBody(injectBody(api.getBody()));
 		
 		return api;
 	}
@@ -149,7 +149,7 @@ public class RestEngine {
 	}
 	
 	
-    private JSONObject injectValues(JSONObject obj) {
+    private JSONObject injectBody(JSONObject obj) {
     	
     	if(obj==null)
     		return null;

@@ -15,7 +15,7 @@ public interface ApiHandler {
 	public void processRequest(RestAPI restAPI, DataContext context);
 	public void processResponse(RestAPI restAPI, Response resp, DataContext context);
 	
-	public static ApiHandler initApiHAndler(String classPath) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+	public static ApiHandler initApiHandler(String classPath) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
 		if(classPath==null)
 			return null;
 		
