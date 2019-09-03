@@ -3,7 +3,7 @@
    "baseUri":"http://localhost:4567",
    "apiHandler":"com.rf.apis.handlers.DefaultApiHandler",
    "properties":{
-      "G":"GET"
+      "api":"/student"
     },
     
     "di":{
@@ -18,7 +18,7 @@
 	"apis":{
 		
 		"postStudent":{
-		  "basePath":"/student",
+		  "basePath":"{{api}}",
 		  "method":"POST",
 		  "body":{
 			   "name":"Ravi Narayan",
@@ -31,7 +31,7 @@
 	     },
 		 
 		"getStudent":{
-		   "basePath":"/student",
+		   "basePath":"{{api}}",
 		   "method":"GET",
 		   "queryParams":{
 		        "id":"{{id}}"
@@ -39,7 +39,7 @@
 		 },
 		 
 		 "getAllStudent":{
-			   "basePath":"/student",
+			   "basePath":"{{api}}",
 			   "method":"GET"
 		 }
 	}

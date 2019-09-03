@@ -10,12 +10,10 @@ import com.rf.apis.RestAPI;
 import io.restassured.RestAssured;
 import io.restassured.config.EncoderConfig;
 import io.restassured.config.RestAssuredConfig;
-import io.restassured.filter.Filter;
-import io.restassured.filter.FilterContext;
+
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.restassured.specification.FilterableRequestSpecification;
-import io.restassured.specification.FilterableResponseSpecification;
+
 import io.restassured.specification.RequestSpecification;
 
 /**

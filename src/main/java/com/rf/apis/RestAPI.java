@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 
 import lombok.Data;
 
+import com.rf.core.DataContext;
 import com.rf.util.JsonUtil;
 import com.rf.util.RestUtil;
 
@@ -88,4 +89,51 @@ public class RestAPI{
 		return RestUtil.sendRequest(null,this);
 	}
 
+	
+	public void inject(DataContext context){
+		
+		if(baseUri!=null && baseUri.indexOf("{{")>-1){
+			baseUri = context.render(baseUri);
+		}
+		
+		if(basePath!=null && basePath.indexOf("{{")>-1){
+			basePath = context.render(basePath);
+		}
+		
+		injectValues(headers, context);
+		injectValues(queryParams, context);		
+		injectValues(formParams,context);
+		injectValues(pathParams, context);
+		injectBody(context);
+	}
+	
+	
+    private void injectBody(DataContext context) {
+    	
+    	if(body==null)
+    		return;
+    
+    	String bodyStr = this.body.toJSONString();
+    	if(bodyStr.indexOf("{{")!=-1){
+    		bodyStr = context.render(bodyStr);
+            this.body =  JsonUtil.getJsonObject(bodyStr);	
+    	}
+	}
+	
+	
+	private void injectValues(HashMap<String, Object> raw, DataContext context){
+		
+		if(raw==null)
+			return;
+		
+		raw.forEach((key,value)->{
+			if(value instanceof String){
+				String v = (String)value;
+				if(v.indexOf("{{")>-1){
+					v = context.render(v);
+			        raw.put(key, v);
+				}
+			}
+		});
+	}
 }

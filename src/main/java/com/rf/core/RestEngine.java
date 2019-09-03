@@ -47,13 +47,21 @@ public class RestEngine {
 	
 	
 	public void start(){
-		if(flowHandler!=null)
+		
+		apiFlow.getProperties().forEach((k,v)->{
+			context.addCache(k, v);
+		});
+		
+		
+		if(flowHandler!=null){
 			flowHandler.preEvent(apiFlow);
-		
-		this.processAPIFlow();
-		
-		if(flowHandler!=null)
+			this.processAPIFlow();
 			flowHandler.postEvent(apiFlow);
+		}else{
+			this.processAPIFlow();
+		}
+	
+			
 	}
 	
 	public static void start(String apiFlowPath){
@@ -118,11 +126,7 @@ public class RestEngine {
 		if(api==null)
 			return null;
 		
-
-		injectValues(api.getQueryParams());		
-		injectValues(api.getFormParams());
-		injectValues(api.getPathParams());
-		api.setBody(injectBody(api.getBody()));
+		api.inject(context);
 		
 		return api;
 	}
@@ -146,39 +150,6 @@ public class RestEngine {
 	    	   if(dvalue == null)
     			   logger.error("DI Failed - value:NULL for param name:"+dc.getParamName());
 	       }
-	}
-	
-	
-    private JSONObject injectBody(JSONObject obj) {
-    	
-    	if(obj==null)
-    		return null;
-    	
-    	String body = obj.toJSONString();
-    	
-    	if(body.indexOf("{{")==-1)
-    		return obj;
-    	
-        body = context.render(body);
-        
-        return JsonUtil.getJsonObject(body);
-	}
-	
-	
-	private void injectValues(HashMap<String, Object> raw){
-		
-		if(raw==null)
-			return;
-		
-		raw.forEach((key,value)->{
-			if(value instanceof String){
-				String v = (String)value;
-				if(v.indexOf("{{")>-1){
-					v = context.render(v);
-			        raw.put(key, v);
-				}
-			}
-		});
 	}
 	
 
