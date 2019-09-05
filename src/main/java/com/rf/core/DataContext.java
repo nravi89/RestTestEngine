@@ -3,10 +3,17 @@ package com.rf.core;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
+import com.rf.di.Date;
+import com.rf.di.Timestamp;
+
 public class DataContext {
 	
 	 private JtwigModel diCache = JtwigModel.newModel();
 	 
+	 public DataContext() {
+		diCache.with("date", Date.VALUE);
+		diCache.with("timestamp", Timestamp.VALUE);
+	}
 	 
 	 public static DataContext getInstance(){
 		 return new DataContext();

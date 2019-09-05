@@ -21,7 +21,7 @@
 		  "basePath":"{{api}}",
 		  "method":"POST",
 		  "body":{
-			   "name":"Ravi Narayan",
+			   "name":"Rav_{{timestamp}}",
 			   "age": 30,
 			   "grade":"22th"
 		  },
