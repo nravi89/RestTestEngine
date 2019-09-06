@@ -30,6 +30,7 @@ public class Test {
 		System.out.println("firstName:"+firstName);
 		System.out.println("last Name:"+lastName);
 		System.out.println("address:"+streetAddress);
+		System.out.println("digit:"+faker.bothify("##"));
 		
 		
 		HarryPotter harryPotter = faker.harryPotter();

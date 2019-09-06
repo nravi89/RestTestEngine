@@ -21,9 +21,9 @@
 		  "basePath":"{{api}}",
 		  "method":"POST",
 		  "body":{
-			   "name":"Rav_{{timestamp}}",
-			   "age": 30,
-			   "grade":"22th"
+			   "name":"{{randomFirstName}} {{randomLastName}}",
+			   "age": "{{N2}}",
+			   "grade":"{{N1}}th"
 		  },
 		  "assertion":{
 			  "status":"200"
