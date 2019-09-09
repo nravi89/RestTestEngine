@@ -1,5 +1,6 @@
 package com.rf.util;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -22,8 +23,9 @@ private static Logger logger = Logger.getLogger(JsonUtil.class);
 		try {
 			//File file = new File(jsonFilePath);
 			//InputStream file = JsonUtil.class.getResourceAsStream(jsonFilePath);
-			Reader reader = ResourceUtils.resource(jsonFilePath);
+			//Reader reader = ResourceUtils.resource(jsonFilePath);
 			
+			Reader reader = new FileReader(jsonFilePath);
 			T obj = objectMapper.readValue(reader,classType);
 		    //objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		   // objectMapper.setVisibilityChecker(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));

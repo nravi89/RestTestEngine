@@ -12,11 +12,11 @@ public class DataContext {
 	 private JtwigModel diCache = JtwigModel.newModel();
 	 
 	 public DataContext() {
-		diCache.with("date", Date.VALUE)
-		       .with("timestamp", Timestamp.VALUE)
-		       .with("randomFullName", Random.FULLNAME)
-		       .with("randomFirstName",Random.FIRSTNAME)
-		       .with("randomLastName", Random.LASTNAME)
+		diCache.with("DATE", Date.VALUE)
+		       .with("TIMESTAMP", Timestamp.VALUE)
+		       .with("R_FULL_NAME", Random.FULLNAME)
+		       .with("R_FIRST_NAME",Random.FIRSTNAME)
+		       .with("R_LAST_NAME", Random.LASTNAME)
 		       .with("N1",Random.NUMBER.digit(1))
 		       .with("N2",Random.NUMBER.digit(2))
 		       .with("N3",Random.NUMBER.digit(3))

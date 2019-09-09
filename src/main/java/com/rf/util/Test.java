@@ -29,6 +29,7 @@ public class Test {
 		System.out.println("name:"+fullName);
 		System.out.println("firstName:"+firstName);
 		System.out.println("last Name:"+lastName);
+		System.out.println("User Name:"+name.username());
 		System.out.println("address:"+streetAddress);
 		System.out.println("digit:"+faker.bothify("##"));
 		

@@ -171,8 +171,13 @@ public class RestEngine {
 	
 	public static void main(String[] args) {
 		//System.out.println(readJsonRequestFile()[0]);
-	    RestEngine.start("jsonApis/test.json", new DefaultFlowHandler());
-	    
+		if(args!=null && args.length>0){
+	      RestEngine.start(args[0], new DefaultFlowHandler());
+		}else{
+			System.out.println("Pass rest api json file.");
+		}
+		
+		//RestEngine.start("jsonApis/test.json", new DefaultFlowHandler());
 		//System.out.println(engine.diCache);
 		
 		/*HashMap<String, Object> respChache = new HashMap<String, Object>();
