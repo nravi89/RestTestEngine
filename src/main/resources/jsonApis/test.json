@@ -1,14 +1,14 @@
 {
-   "seq":["postStudent","getStudent","getAllStudent"],
+   "seq":["postStudent1","postStudent2","getStudent","getAllStudent"],
    "baseUri":"http://localhost:4567",
    "apiHandler":"com.rf.apis.handlers.DefaultApiHandler",
    "properties":{
-      "api":"/student"
-      "p":"{{R_PERSON}}"	  
+      "api":"/student",
+      "name":"{{R_FIRST_NAME}}"	  
     },
     
     "di":{
-    	"postStudent":[
+    	"postStudent1":[
     		{
     			"paramName":"id",
                 "jsonPath":"id"
@@ -18,7 +18,7 @@
     
 	"apis":{
 		
-		"postStudent":{
+		"postStudent1":{
 		  "basePath":"{{api}}",
 		  "method":"POST",
 		  "body":{
@@ -30,6 +30,19 @@
 			  "status":"200"
 		  }
 	     },
+	     
+	     "postStudent2":{
+			  "basePath":"{{api}}",
+			  "method":"POST",
+			  "body":{
+				   "name":"{{name}} {{name}}",
+				   "age": "{{N2}}",
+				   "grade":"{{N1}}th"
+			  },
+			  "assertion":{
+				  "status":"200"
+			  }
+		     },
 		 
 		"getStudent":{
 		   "basePath":"{{api}}",

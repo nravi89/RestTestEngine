@@ -14,7 +14,7 @@ public class RestApiFlow {
 	private String apiHandler; 
 	private HashMap<String, String> properties;
 	private HashMap<String, Dconfig[]> di;
-	private HashMap<String, RestAPI> apis;
-	
+	private HashMap<String, RestAPI> apis;	
+
 
 }

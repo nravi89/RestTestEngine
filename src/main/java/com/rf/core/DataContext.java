@@ -34,6 +34,12 @@ public class DataContext {
 		 diCache.with(key, value);
 	 }
 	 
+	 public void addCache(String key, String value){
+		 if(value.contains("{{"))
+			 value = render(value);
+		 diCache.with(key, value);
+	 }
+	 
 	 public String render(String template){
 		 JtwigTemplate t = JtwigTemplate.inlineTemplate(template);
 	     return t.render(diCache);

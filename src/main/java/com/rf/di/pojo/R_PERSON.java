@@ -18,5 +18,8 @@ public class R_PERSON implements R_POJO{
 	@Override
 	public void build(DataContext context) {
 		String firstName = Random.FAKER.name().firstName();
+		String lastName = Random.FAKER.name().lastName();
+		String name = firstName+" "+lastName;
+		String user = firstName+"."+lastName;
 	}
 }
