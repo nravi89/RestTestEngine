@@ -1,5 +1,7 @@
 package com.rf.core;
 
+import java.util.Map;
+
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
@@ -9,9 +11,13 @@ import com.rf.di.Timestamp;
 
 public class DataContext {
 	
-	 private JtwigModel diCache = JtwigModel.newModel();
+	 private static JtwigModel globalCache = JtwigModel.newModel();
+	 private JtwigModel diCache;
 	 
-	 public DataContext() {
+	 private DataContext(Map<String, Object> inputData) {
+		
+		diCache = inputData!=null? JtwigModel.newModel(inputData):JtwigModel.newModel();
+		
 		diCache.with("DATE", Date.VALUE)
 		       .with("TIMESTAMP", Timestamp.VALUE)
 		       .with("R_FULL_NAME", Random.FULLNAME)
@@ -27,7 +33,12 @@ public class DataContext {
 	}
 	 
 	 public static DataContext getInstance(){
-		 return new DataContext();
+		 return getInstance(null);
+	 }
+	 
+	 public static DataContext getInstance(Map<String, Object> inputData){
+		 DataContext dc = new DataContext(inputData);
+		 return dc;
 	 }
 	 
 	 public void addCache(String key, Object value){
@@ -35,12 +46,12 @@ public class DataContext {
 	 }
 	 
 	 public void addCache(String key, String value){
-		 if(value.contains("{{"))
+		 //if(value.contains("{{"))
 			 value = render(value);
 		 diCache.with(key, value);
 	 }
 	 
-	 public String render(String template){
+	 public String render(String template){		 
 		 JtwigTemplate t = JtwigTemplate.inlineTemplate(template);
 	     return t.render(diCache);
 	 }
