@@ -3,8 +3,8 @@ A framework to test RestApi based projects
 
 ## Example
 
-Lets start with very small example so you get the idea about RestTestEngine.
-RestTestEngine test flow of apis. We will provide a json file which have all the api information and calling sequence for each api.
+Lets start with very small example to RestTestEngine.
+RestTestEngine test, flow of apis. We will provide a json file which have all the api information and calling sequence for each api.
 
 ```
 //Json file name: apiFlow.json
