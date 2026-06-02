@@ -3,9 +3,15 @@ A framework to test RestApi based projects
 
 ## Example
 
-Lets start with very small example.
-RestTestEngine test, flow of apis. We will provide a json file which have all the api information and calling sequence for each api.
+Let's start with a very small example.
 
+For the RestTestEngine test flow, we'll provide a JSON file that contains:
+
+- All API details (endpoint, method, headers, payload, etc.)
+- The execution sequence of the APIs
+- Any dependencies between APIs (if applicable)
+
+The engine will read the JSON file and execute the APIs in the specified order, making it easy to manage and update test flows without changing the code.
 ```
 //Json file name: apiFlow.json
 {
@@ -56,7 +62,7 @@ RestTestEngine test, flow of apis. We will provide a json file which have all th
 }	
 ```
 
-Now call this api flow using RestTestEngin. Thats it!
+Now We can call this api flow using RestTestEngin. Thats it!
 
 ```java
  RestEngine.start("apiFlow.json");
